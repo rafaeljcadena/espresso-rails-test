@@ -44,6 +44,12 @@ gem 'shakapacker', '~> 8.0'
 # Use react-rails to use React with Rails
 gem 'react-rails', '~> 3.2', '>= 3.2.1'
 
+# Environment variables handler
+gem 'figaro'
+
+# CPF/CNPJ validation
+gem 'cpf_cnpj'
+
 # Authentication
 gem 'devise_token_auth'
 
