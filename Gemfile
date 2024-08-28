@@ -44,6 +44,9 @@ gem 'shakapacker', '~> 8.0'
 # Use react-rails to use React with Rails
 gem 'react-rails', '~> 3.2', '>= 3.2.1'
 
+# Authentication
+gem 'devise_token_auth'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
