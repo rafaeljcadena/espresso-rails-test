@@ -36,12 +36,25 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
+  rails.application.routes.default_url_options[:host] = ENV.fetch('DOMAIN', '')
+  rails.application.routes.default_url_options[:protocol] = 'https'
+  config.action_mailer.asset_host = "https://#{ENV.fetch('DOMAIN', '')}"
+  config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN', '') }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              ENV.fetch("MAILGUN_SMTP_SERVER"),
+    port:                 ENV.fetch("MAILGUN_SMTP_PORT").to_i,
+    domain:               ENV.fetch('MAILGUN_DOMAIN', ''),
+    user_name:            ENV.fetch("MAILGUN_SMTP_LOGIN"),
+    password:             ENV.fetch("MAILGUN_SMTP_PASSWORD")
+  }
+
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
