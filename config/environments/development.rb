@@ -33,7 +33,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
@@ -53,6 +53,24 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  config.action_mailer.asset_host = 'http://localhost:3000'
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  config.default_url_options = { host: 'localhost:3000' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:         'smtp.mailgun.org',
+    port:            587,
+    domain:          ENV.fetch('MAIL_DOMAIN'),
+    user_name:       ENV.fetch('MAIL_USER'),
+    password:        ENV.fetch('MAIL_PASSWORD'),
+    authentication:  'plain',
+    enable_starttls: true,
+    open_timeout:    5,
+    read_timeout:    5 
+  }
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
