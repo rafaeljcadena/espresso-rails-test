@@ -1,9 +1,8 @@
 class Company < ApplicationRecord
-  validates :name, presence: true
-  validates :cnpj, presence: true
+  validates :cnpj, :name, presence: true
+  validates :cnpj, :name, uniqueness: true
 
-  validate :check_cnpj
-
+  validate :check_cnpj, if: proc { cnpj.present? }
   def check_cnpj
     errors.add(:cnpj, 'CNPJ inválido') unless CNPJ.valid?(cnpj, strict: true)
   end
