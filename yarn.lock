@@ -1597,7 +1597,7 @@
     "lz-string" "^1.5.0"
     "pretty-format" "^27.0.2"
 
-"@testing-library/jest-dom@^6.4.8":
+"@testing-library/jest-dom@^6.5.0":
   "integrity" "sha512-xGGHpBXYSHUUr6XsKBfs85TWlYKpTc37cSBBVrXcib2MkHLboWlkClhWF37JKlDb9KEq3dHs+f2xR7XJEWGBxA=="
   "resolved" "https://registry.npmjs.org/@testing-library/jest-dom/-/jest-dom-6.5.0.tgz"
   "version" "6.5.0"
@@ -7340,7 +7340,7 @@
     "range-parser" "^1.2.1"
     "schema-utils" "^4.0.0"
 
-"webpack-dev-server@^4.15.2", "webpack-dev-server@^4.9.0 || ^5.0.0":
+"webpack-dev-server@^4.9.0 || ^5.0.0":
   "integrity" "sha512-0XavAZbNJ5sDrCbkpWL8mia0o5WPOd2YGtxrEiZkBK9FjLppIUK2TgxK6qGD2P3hUXTJNNPVibrerKcx5WkR1g=="
   "resolved" "https://registry.npmjs.org/webpack-dev-server/-/webpack-dev-server-4.15.2.tgz"
   "version" "4.15.2"
