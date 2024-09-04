@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Card do
@@ -21,10 +23,11 @@ RSpec.describe Card do
     end
   end
 
-  describe 'virtual attributes' do 
+  describe 'virtual attributes' do
     it 'respond to creator attribute' do
       expect(described_class.new).to respond_to(:creator)
     end
+
     it 'respond to email attribute' do
       expect(described_class.new).to respond_to(:email)
     end

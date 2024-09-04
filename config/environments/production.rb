@@ -40,11 +40,11 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch('DOMAIN', '') }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              ENV.fetch("MAILGUN_SMTP_SERVER"),
-    port:                 ENV.fetch("MAILGUN_SMTP_PORT").to_i,
-    domain:               ENV.fetch('MAILGUN_DOMAIN', ''),
-    user_name:            ENV.fetch("MAILGUN_SMTP_LOGIN"),
-    password:             ENV.fetch("MAILGUN_SMTP_PASSWORD")
+    address: ENV.fetch('MAILGUN_SMTP_SERVER'),
+    port: ENV.fetch('MAILGUN_SMTP_PORT').to_i,
+    domain: ENV.fetch('MAILGUN_DOMAIN', ''),
+    user_name: ENV.fetch('MAILGUN_SMTP_LOGIN'),
+    password: ENV.fetch('MAILGUN_SMTP_PASSWORD')
   }
 
   # Specifies the header that your server uses for sending files.

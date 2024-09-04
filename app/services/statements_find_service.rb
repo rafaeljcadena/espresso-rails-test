@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StatementsFindService
   attr_reader :statement
 

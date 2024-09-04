@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersCreateEmployeeService
   attr_reader :errors, :user
 

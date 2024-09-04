@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CardsCreateService
   attr_reader :card
 

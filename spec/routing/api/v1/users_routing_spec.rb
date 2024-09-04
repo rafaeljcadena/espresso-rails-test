@@ -17,11 +17,13 @@ RSpec.describe Api::V1::UsersController do
     end
 
     it 'routes to #update_employee via PATCH' do
-      expect(patch: '/api/v1/users/1/update_employee').to route_to('api/v1/users#update_employee', id: '1', format: :json)
+      expect(patch: '/api/v1/users/1/update_employee').to route_to('api/v1/users#update_employee', id: '1',
+                                                                                                   format: :json)
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/api/v1/users/1/destroy_employee').to route_to('api/v1/users#destroy_employee', id: '1', format: :json)
+      expect(delete: '/api/v1/users/1/destroy_employee').to route_to('api/v1/users#destroy_employee', id: '1',
+                                                                                                      format: :json)
     end
   end
 end

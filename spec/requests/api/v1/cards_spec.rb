@@ -66,7 +66,7 @@ RSpec.describe '/cards' do
     context 'with invalid parameters' do
       it 'does not create a new Card' do
         expect do
-          employee_with_company_a = create(:employee_a_first, company: admin_a.company)
+          create(:employee_a_first, company: admin_a.company)
           email = nil
 
           post api_v1_cards_path, params: { card: valid_attributes.merge(email: email) }, headers: admin_auth_token
@@ -81,8 +81,8 @@ RSpec.describe '/cards' do
       employee = card_a.user
       email = card_a.user.email
 
-      patch api_v1_card_path(card_a), 
-            params: { card: valid_attributes.merge(email: email) }, 
+      patch api_v1_card_path(card_a),
+            params: { card: valid_attributes.merge(email: email) },
             headers: employee.create_new_auth_token
       expect(response).to have_http_status(:unauthorized)
     end
@@ -100,9 +100,9 @@ RSpec.describe '/cards' do
     end
 
     context 'with invalid parameters' do
-      it "returns unprocessable entity status" do
+      it 'returns unprocessable entity status' do
         card = create(:card_a, user: employee_a_first)
-        other_email = employee_a_second.email
+        employee_a_second.email
 
         patch api_v1_card_url(card), params: { card: { email: nil } }, headers: admin_auth_token
         expect(response).to have_http_status(:unprocessable_entity)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   validates :cnpj, :name, presence: true
   validates :cnpj, :name, uniqueness: true

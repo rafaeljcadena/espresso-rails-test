@@ -22,7 +22,7 @@ RSpec.describe '/api/v1/users' do
   let(:employee_a_first) { create(:employee_a_first, company: company_a) }
   let(:employee_a_second) { create(:employee_a_second, company: company_a) }
   let(:card_a) { create(:card_a, user: employee_a_first) }
-  let(:statement_a) { create(:statement_a, card: card_a )}
+  let(:statement_a) { create(:statement_a, card: card_a) }
   let(:admin_auth_token) { admin_a.create_new_auth_token }
   let(:employee_auth_token) { employee_a_first.create_new_auth_token }
 
@@ -56,9 +56,9 @@ RSpec.describe '/api/v1/users' do
     context 'with valid parameters' do
       it 'does create employees by admin' do
         employee_params = attributes_for(:employee_a_first)
-        post create_employee_api_v1_users_path, 
-              params: { user: employee_params }, 
-              headers: admin_auth_token
+        post create_employee_api_v1_users_path,
+             params: { user: employee_params },
+             headers: admin_auth_token
         expect(response).to have_http_status(:created)
       end
     end
@@ -68,9 +68,9 @@ RSpec.describe '/api/v1/users' do
         employee_params = attributes_for(:employee_a_first)
         employee_params.delete :email
 
-        post create_employee_api_v1_users_path, 
-              params: { user: employee_params }, 
-              headers: admin_auth_token
+        post create_employee_api_v1_users_path,
+             params: { user: employee_params },
+             headers: admin_auth_token
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -87,8 +87,8 @@ RSpec.describe '/api/v1/users' do
         admin_params = attributes_for(:admin_a)
         admin_params[:company_attributes] = attributes_for(:company_a)
 
-        post create_admin_api_v1_users_path, 
-              params: { user: admin_params }
+        post create_admin_api_v1_users_path,
+             params: { user: admin_params }
         expect(response).to have_http_status(:created)
       end
     end
@@ -99,8 +99,8 @@ RSpec.describe '/api/v1/users' do
         admin_params[:company_attributes] = attributes_for(:company_a)
         admin_params.delete :email
 
-        post create_admin_api_v1_users_path, 
-              params: { user: admin_params }
+        post create_admin_api_v1_users_path,
+             params: { user: admin_params }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -113,7 +113,7 @@ RSpec.describe '/api/v1/users' do
         new_email = 'new-email@employee.com'
 
         patch update_employee_api_v1_user_path(employee_a_first),
-              params: { user: { email: new_email }}, 
+              params: { user: { email: new_email } },
               headers: admin_auth_token
         expect(response).to have_http_status(:ok)
       end
@@ -125,7 +125,7 @@ RSpec.describe '/api/v1/users' do
         duplicated_email = employee_a_second.email
 
         patch update_employee_api_v1_user_path(employee_a_first),
-              params: { user: { email: duplicated_email }}, 
+              params: { user: { email: duplicated_email } },
               headers: admin_auth_token
         expect(response).to have_http_status(:unprocessable_entity)
       end

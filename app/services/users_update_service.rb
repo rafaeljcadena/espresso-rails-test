@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersUpdateService
   attr_reader :user
 

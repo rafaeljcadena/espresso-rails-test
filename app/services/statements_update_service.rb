@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StatementsUpdateService
   attr_reader :statement, :errors
 
@@ -8,14 +10,12 @@ class StatementsUpdateService
 
   def update
     Statement.transaction do
-      begin
-        @statement.assign_attributes(@params)
-        @statement.status = 'verified' if @statement.file.attached? && @statement.category.present?
+      @statement.assign_attributes(@params)
+      @statement.status = 'verified' if @statement.file.attached? && @statement.category.present?
 
-        @statement.save!
-      rescue ActiveRecord::RecordInvalid
-        @statement.valid?
-      end
+      @statement.save!
+    rescue ActiveRecord::RecordInvalid
+      @statement.valid?
     end
   end
 end

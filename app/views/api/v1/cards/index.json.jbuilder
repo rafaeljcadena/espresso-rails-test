@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @cards do |card|
   json.extract! card, :id, :last4
   json.user_name card.user.name

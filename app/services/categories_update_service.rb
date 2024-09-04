@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CategoriesUpdateService
   attr_reader :category
 

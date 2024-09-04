@@ -21,4 +21,3 @@ RSpec.describe Api::V1::CategoriesController do
     end
   end
 end
-

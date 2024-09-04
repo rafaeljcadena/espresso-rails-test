@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.total_records @statements.total_entries
 json.statements @statements do |statement|
   json.extract! statement, :id, :performed_at, :cost, :merchant, :card_last4, :status

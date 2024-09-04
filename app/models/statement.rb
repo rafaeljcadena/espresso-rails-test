@@ -20,13 +20,13 @@ class Statement < ApplicationRecord
 
   validate :correct_file_mime_type
   validate :check_category_company, if: proc { card.present? && category.present? }
-  
+
   private
 
   def correct_file_mime_type
-    if file.attached? && !file.content_type.in?(%w(image/png image/jpeg application/pdf))
-      errors.add(:file, 'Formato de arquivo inválido')
-    end
+    return unless file.attached? && !file.content_type.in?(%w[image/png image/jpeg application/pdf])
+
+    errors.add(:file, 'Formato de arquivo inválido')
   end
 
   def check_category_company
