@@ -55,8 +55,6 @@ export default function NewCardModal({ open, toggleCardModalOpen, toggleRefreshD
         toggleRefreshData();
       })
       .catch(err => {
-        if (!err.response) throw err;
-
         const { data: dataError } = err.response;
 
         setInputCardNumberError(dataError.last4);

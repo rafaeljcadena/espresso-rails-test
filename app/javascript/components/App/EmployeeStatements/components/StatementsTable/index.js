@@ -72,9 +72,7 @@ export default function StatementsTable({ filter, emptyDataLabel, prepareUpdateM
         setStatements(res.data.statements);
         setTotalRecords(res.data.total_records)
       })
-      .catch(err => {
-        if (!err.response) throw err;
-      });
+      .catch(err => {});
   }
 
   useEffect(() => {

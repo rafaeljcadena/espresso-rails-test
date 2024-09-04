@@ -26,9 +26,7 @@ export default function UsersLine({ refreshData, prepateUpdateUserModal }) {
       .then(res => {
         setUsers(res.data);
       })
-      .catch(err => {
-        if (!err.response) throw err;
-      });
+      .catch(err => {});
   }, [refreshData]);
 
   if (!users) return <Typography>Carregando...</Typography>

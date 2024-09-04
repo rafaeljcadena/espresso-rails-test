@@ -78,7 +78,7 @@ export default function StatementUpdateModal({ open, statement, categoryList, to
       toggleRefreshData();
     })
     .catch(err => {
-      if (!err.response) throw err;
+      if (!err.response) return; 
 
       const { data: dataError } = err.response;
 

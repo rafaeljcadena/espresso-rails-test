@@ -45,8 +45,6 @@ export default function UpdateCardModal({ open, cardUpdateObj, toggleCardUpdateM
         toggleRefreshData();
       })
       .catch((err) => {
-        if (!err.response) throw err;
-
         const { data: dataError } = err.response;
 
         if (dataError.user) setInputUserError('funcionário não encontrado')

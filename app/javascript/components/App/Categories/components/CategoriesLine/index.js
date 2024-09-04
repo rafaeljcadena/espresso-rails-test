@@ -11,9 +11,7 @@ export default function CategoriesLine({ refreshData }) {
       .then(res => {
         setCategories(res.data);
       })
-      .catch(err => {
-        if (!err.response) throw err;
-      });
+      .catch(err => {});
   }, [refreshData]);
 
   if (!categories) return <Typography>Carregando...</Typography>

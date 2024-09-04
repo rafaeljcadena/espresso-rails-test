@@ -53,8 +53,6 @@ export default function NewUserModal({ open, toggleUserModalOpen, toggleRefreshD
         toggleRefreshData();
       })
       .catch((err) => {
-        if (!err.response) throw err;
-
         const { data: dataError } = err.response;
 
         if (dataError.name) setInputNameError('Insira um nome válido');

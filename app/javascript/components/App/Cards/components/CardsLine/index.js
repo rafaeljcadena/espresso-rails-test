@@ -12,9 +12,9 @@ export default function CardsLine({ refreshData, prepateUpdateCardModal }) {
       .then(res => {
         setCards(res.data);
       })
-      .catch(err => {
-        if (!err.response) throw err;
-      });
+      .catch(err => {});
+
+      return () => ({});
   }, [refreshData]);
 
   if (!cards) return <Typography>Carregando...</Typography>

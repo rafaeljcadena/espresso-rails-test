@@ -11,9 +11,11 @@ axiosClient.interceptors.request.use(function (request) {
   if (!publicPaths.includes(request.url)) {
     const authInfo = getAuthInfo();
 
-    request.headers['uid'] = authInfo.uid;
-    request.headers['client'] = authInfo.client;
-    request.headers['access-token'] = authInfo['access-token'];
+    if (authInfo) {
+      request.headers['uid'] = authInfo.uid;
+      request.headers['client'] = authInfo.client;
+      request.headers['access-token'] = authInfo['access-token'];
+    }
   }
 
   return request;

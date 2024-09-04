@@ -23,7 +23,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function UpdateCardModal({ open, userUpdateObj, toggleUserUpdateModalOpen, toggleRefreshData }) {
+export default function UpdateUserModal({ open, userUpdateObj, toggleUserUpdateModalOpen, toggleRefreshData }) {
   
   const inputNameRef = useRef();
   const [inputNameError, setInputNameError] = useState();
@@ -86,7 +86,7 @@ export default function UpdateCardModal({ open, userUpdateObj, toggleUserUpdateM
         </IconButton>
         <DialogContent>
           <TextField
-            defaultValue={userUpdateObj.name}
+            defaultValue={userUpdateObj?.name}
             inputRef={inputNameRef}
             id="outlined-basic"
             error={inputNameError}
@@ -98,7 +98,7 @@ export default function UpdateCardModal({ open, userUpdateObj, toggleUserUpdateM
             required
           />
           <TextField
-            defaultValue={userUpdateObj.email}
+            defaultValue={userUpdateObj?.email}
             inputRef={inputEmailRef}
             id="outlined-basic"
             error={inputEmailError}

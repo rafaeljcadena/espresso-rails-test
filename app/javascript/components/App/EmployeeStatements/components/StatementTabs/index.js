@@ -37,7 +37,7 @@ function a11yProps(index) {
 }
 
 export default function StatementTabs() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -77,6 +77,7 @@ export default function StatementTabs() {
 
         setCategoryList(categoryOptions);
       })
+      .catch(err => {});
   }, []);
 
   return (
