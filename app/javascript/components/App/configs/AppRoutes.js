@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
@@ -86,6 +87,7 @@ export default function AppRoutes() {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<Navigate to="/app/sign-in" replace />} />
         </Routes>
       </Router>
     </>
