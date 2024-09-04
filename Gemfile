@@ -35,6 +35,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# AWS Access
+gem 'aws-sdk-s3'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
@@ -53,12 +56,27 @@ gem 'cpf_cnpj'
 # Authentication
 gem 'devise_token_auth'
 
+# Pagination
+gem 'will_paginate', '~> 4.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
+  # Better debugger
+  gem 'pry', '~> 0.14.2'
+  gem 'pry-rails'
+
   # Use rspec-rails for testing
   gem 'rspec-rails', '~> 5.1', '>= 5.1.2'
+
+  # Simple one-liner tests for common Rails functionality
+  gem 'shoulda-matchers', '~> 5.0'
+
+  # Factory to create entities
+  gem 'factory_bot_rails'
+
+  gem 'solargraph'
 end
 
 group :development do
