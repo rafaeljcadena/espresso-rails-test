@@ -1,0 +1,31 @@
+<div style="width: 600px; margin: 40px auto 0px;">
+  <div style="text-align: center;">
+    <%= image_tag 'logo-black' %>
+  </div>
+  <h2 style="text-align: center;">Prezado(a) <%= @user.name %>,</h2>
+  <p>
+    É com grande satisfação que damos as boas-vindas ao Espresso. Estamos felizes em tê-lo(a) como parte da nossa
+    comunidade e esperamos que nossa plataforma atenda todas as suas necessidades de gestão de despesas corporativas.
+  </p>
+  <p style="font-weight: 700;">Segue abaixo as suas credenciais de acesso ao sistema:</p>
+  <p style="font-weight: 700;">
+    URL de acesso: <%= link_to app_sign_in_url, app_sign_in_url, target: '_blank' %><br />
+    Usuário: <%= @user.email %><br />
+    Senha: <%= ENV.fetch('DEFAULT_USERPASS') %><br />
+  </p>
+  <p>
+    1. Acesse o Espresso através do link fornecido.<br />
+    2. Faça login com o seu usuário e senha.
+  </p>
+  <p>
+    Agradecemos a sua confiança e desejamos uma excelente experiência com o Espresso.<br/>
+    Atenciosamente,
+  </p>
+  <hr />
+  <p>
+    Se tiver alguma dúvida ou precisar de ajuda, entre em contato conosco através do suporte@espressoapp.com.br
+  </p>
+  <p style="font-family: 'Inter'; font-size: .9rem;">
+    ❤️ Time do Espresso
+  </p>
+</div>
