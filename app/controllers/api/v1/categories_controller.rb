@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class CategoriesController < BaseController
       before_action :set_updateable_category, only: %i[update destroy]
-      before_action :authorize_admin
+      before_action :authorize_admin, except: :index
 
       def index
         categories = CategoriesListService.new(current_user).categories

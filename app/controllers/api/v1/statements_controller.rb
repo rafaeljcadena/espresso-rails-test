@@ -4,7 +4,7 @@ module Api
   module V1
     class StatementsController < BaseController
       before_action :set_updateable_statement, only: %i[archive update]
-      before_action :authorize_admin, except: :update
+      before_action :authorize_admin, except: %i[index update]
       before_action :authorize_employee, only: :update
 
       def index
