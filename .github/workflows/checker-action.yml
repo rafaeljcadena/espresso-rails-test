@@ -12,6 +12,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: mysql2://root:@127.0.0.1/espresso-rails-test_test
+      DEFAULT_USERPASS: espresso123456
     services:
       mysql:
         image: mysql:8.4
