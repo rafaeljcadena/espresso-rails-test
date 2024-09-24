@@ -8,7 +8,7 @@ import axiosClient from '../configs/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Login() {
+export default function SignIn() {
   const navigate = useNavigate();
   const [credentialsError, setCredentialsError] = useState();
 
@@ -26,10 +26,10 @@ export default function Login() {
       })
       .catch(err => {
         const { response } = err;
-        if (!response) throw err;
 
-        const { data: dataError } = err.response;
-        if (dataError.errors) setCredentialsError('Credenciais inválidas. Tente novamente');
+        const { data: dataError } = response;
+
+        setCredentialsError(dataError.errors);
       })
   }
 

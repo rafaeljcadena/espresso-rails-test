@@ -22,14 +22,6 @@ export default function SignUp() {
     setToastOpen(true);
   }
 
-  const handleCloseToast = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setToastOpen(false);
-  };
-
   const inputNameRef = useRef();
   const inputEmailRef = useRef();
   const inputPasswordRef = useRef();
@@ -45,19 +37,17 @@ export default function SignUp() {
 
     axiosClient.post('/api/v1/users/create_admin.json', { user: { name, email, password, company_attributes: { name: companyName, cnpj: companyCnpj } } })
       .then((res) => {
-        triggerToast();
         clearInputs();
+        triggerToast();
       })
       .catch(err => {
-        if (!err.response) throw err;
-
         const { data } = err.response;
 
         setinputNameError(data.name);
         setinputEmailError(data.email);
         setinputPasswordError(data.password);
-        setinputCompanyNameError(data.company?.name);
-        setinputCompanyCnpjError(data.company?.cnpj);
+        setinputCompanyNameError(data['company.name']);
+        setinputCompanyCnpjError(data['company.cnpj']);
       })
   }
 
@@ -97,6 +87,7 @@ export default function SignUp() {
               style={{ marginBottom: 20 }} 
               error={!!inputNameError}
               helperText={inputNameError}
+              inputProps={{ "data-testid": "name" }}
             />
             <TextField 
               inputRef={inputEmailRef}
@@ -107,6 +98,7 @@ export default function SignUp() {
               style={{ marginBottom: 20 }} 
               error={!!inputEmailError}
               helperText={inputEmailError}
+              inputProps={{ "data-testid": "email" }}
             />
             <TextField 
               inputRef={inputPasswordRef}
@@ -118,6 +110,7 @@ export default function SignUp() {
               style={{ marginBottom: 20 }} 
               error={!!inputPasswordError}
               helperText={inputPasswordError}
+              inputProps={{ "data-testid": "password" }}
             />
             <TextField 
               inputRef={inputCompanyNameRef}
@@ -128,6 +121,7 @@ export default function SignUp() {
               style={{ marginBottom: 20 }} 
               error={!!inputCompanyNameError}
               helperText={inputCompanyNameError}
+              inputProps={{ "data-testid": "password-confirmation" }}
             />
             <TextField 
               inputRef={inputCompanyCnpjRef}
@@ -138,6 +132,7 @@ export default function SignUp() {
               style={{ marginBottom: 20 }} 
               error={!!inputCompanyCnpjError}
               helperText={inputCompanyCnpjError}
+              inputProps={{ "data-testid": "cnpj" }}
             />
             <div>
               <Button 
@@ -160,7 +155,6 @@ export default function SignUp() {
       <ToastComponent
         open={toastOpen}
         message="Administrador criado com sucesso"
-        handleCloseToast={handleCloseToast}
       />
     </Box>
   )
