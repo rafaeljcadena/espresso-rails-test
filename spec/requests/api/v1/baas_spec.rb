@@ -15,7 +15,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/webhooks' do
-  let(:valid_attributes) { attributes_for(:statement_a) }
+  let(:valid_attributes) { attributes_for(:statement) }
 
   describe 'POST /webhooks' do
     it 'is public access' do
