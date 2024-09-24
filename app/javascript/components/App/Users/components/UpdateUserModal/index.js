@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
+import axiosClient from '../../../configs/axiosClient';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialog-paper': {
@@ -48,16 +48,16 @@ export default function UpdateUserModal({ open, userUpdateObj, toggleUserUpdateM
 
     const { id } = userUpdateObj;
 
-    axios.patch(`/api/v1/users/${id}/update_employee.json`, { user: { name, email }})
+    axiosClient.patch(`/api/v1/users/${id}/update_employee.json`, { user: { name, email }})
       .then(res => {
-        toggleUserUpdateModalOpen();
         toggleRefreshData();
+        toggleUserUpdateModalOpen();
       })
       .catch((err) => {
         const { data: dataError } = err.response;
 
-        if (dataError.name) setInputNameError('Insira um nome válido');
-        if (dataError.email) setInputEmailError('Insira um e-mail válido');
+        setInputNameError(dataError.name);
+        setInputEmailError(dataError.email);
       })
   }
 
@@ -89,24 +89,26 @@ export default function UpdateUserModal({ open, userUpdateObj, toggleUserUpdateM
             defaultValue={userUpdateObj?.name}
             inputRef={inputNameRef}
             id="outlined-basic"
-            error={inputNameError}
+            error={!!inputNameError}
             helperText={inputNameError}
             label="Nome"
             variant="outlined"
             fullWidth
             sx={{ marginBottom: '20px' }}
             required
+            inputProps={{ "data-testid": "input-user-name" }}
           />
           <TextField
             defaultValue={userUpdateObj?.email}
             inputRef={inputEmailRef}
             id="outlined-basic"
-            error={inputEmailError}
+            error={!!inputEmailError}
             helperText={inputEmailError}
             label="E-mail"
             variant="outlined"
             fullWidth
             required
+            inputProps={{ "data-testid": "input-user-email" }}
           />
         </DialogContent>
         <DialogActions style={{ justifyContent: 'start' }}>

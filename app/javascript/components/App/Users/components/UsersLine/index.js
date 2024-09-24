@@ -1,5 +1,5 @@
 import { Box, Divider, Typography, Button } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import Avatar from '@mui/material/Avatar';
 import axiosClient from '../../../configs/axiosClient';
@@ -18,8 +18,13 @@ const stringAvatar = (name) => {
   };
 }
 
-export default function UsersLine({ refreshData, prepateUpdateUserModal }) {
+export default function UsersLine(props) {
+  const { refreshData, prepareUpdateUserModal } = props;
   const [users, setUsers] = useState();
+
+  const handleClick = (user) => {
+    prepareUpdateUserModal(user);
+  };
 
   useEffect(() => {
     axiosClient.get('/api/v1/users.json')
@@ -44,10 +49,10 @@ export default function UsersLine({ refreshData, prepateUpdateUserModal }) {
 
   return (
     <Box sx={{ marginTop: '30px' }}>
-      {users.map((user) => {
+      {users.map((user, index) => {
         return (
-          <>
-            <Box key={user.id} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Fragment key={user.id}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Avatar {...stringAvatar(user.name)} sx={{ marginRight: '10px' }} />
               <Box>
                 <Typography>{user.name}</Typography>
@@ -63,13 +68,14 @@ export default function UsersLine({ refreshData, prepateUpdateUserModal }) {
                 variant="outlined"
                 startIcon={<EditIcon />}
                 sx={{ marginLeft: 'auto' }}
-                onClick={() => prepateUpdateUserModal(user)}
+                onClick={() => handleClick(user)}
+                data-testid={`update-employee-${index}`}
               >
                 Editar
               </Button>
             </Box>
             <Divider sx={{ margin: '10px 0px' }} />
-          </>
+          </Fragment>
         );
       })}
     </Box>

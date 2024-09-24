@@ -20,7 +20,7 @@ export default function Users() {
     setUserUpdateModalOpen(prev => !prev);
   }
 
-  const prepateUpdateUserModal = (user) => {
+  const prepareUpdateUserModal = (user) => {
     setUserUpdateObj({ ...user });
     toggleUserUpdateModalOpen();
   }
@@ -38,7 +38,7 @@ export default function Users() {
       <Container>
         <UsersLine
           refreshData={refreshData}
-          prepateUpdateUserModal={prepateUpdateUserModal}
+          prepareUpdateUserModal={prepareUpdateUserModal}
         />
       </Container>
       <NewUserModal

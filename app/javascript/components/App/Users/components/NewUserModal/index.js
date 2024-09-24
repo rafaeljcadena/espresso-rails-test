@@ -9,7 +9,6 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
 import axiosClient from '../../../configs/axiosClient';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -47,16 +46,18 @@ export default function NewUserModal({ open, toggleUserModalOpen, toggleRefreshD
       return;
     }
 
+    setInputNameError();
+    setInputEmailError();
     axiosClient.post(`/api/v1/users/create_employee.json`, { user: { name, email }})
       .then(res => {
-        toggleUserModalOpen();
         toggleRefreshData();
+        toggleUserModalOpen();
       })
       .catch((err) => {
         const { data: dataError } = err.response;
 
-        if (dataError.name) setInputNameError('Insira um nome válido');
-        if (dataError.email) setInputEmailError('Insira um e-mail válido');
+        setInputNameError(dataError.name);
+        setInputEmailError(dataError.email);
       })
   }
 
@@ -87,23 +88,25 @@ export default function NewUserModal({ open, toggleUserModalOpen, toggleRefreshD
           <TextField
             inputRef={inputNameRef}
             id="outlined-basic"
-            error={inputNameError}
+            error={!!inputNameError}
             helperText={inputNameError}
             label="Nome"
             variant="outlined"
             fullWidth
             required
             sx={{ marginBottom: '20px' }}
+            inputProps={{ "data-testid": "input-user-name" }}
           />
           <TextField
             inputRef={inputEmailRef}
             id="outlined-basic"
-            error={inputEmailError}
+            error={!!inputEmailError}
             helperText={inputEmailError}
             label="E-mail"
             variant="outlined"
             fullWidth
             required
+            inputProps={{ "data-testid": "input-user-email" }}
           />
         </DialogContent>
         <DialogActions style={{ justifyContent: 'start' }}>
