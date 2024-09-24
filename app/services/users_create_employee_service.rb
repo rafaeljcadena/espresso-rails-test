@@ -15,7 +15,7 @@ class UsersCreateEmployeeService
 
   def save
     if @user.save
-      UserMailer.welcome(@user.id).deliver_now unless Rails.env.test?
+      UserMailer.welcome(@user.id).deliver_now
 
       @user.persisted?
     else

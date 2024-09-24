@@ -1,6 +1,6 @@
 <div style="width: 600px; margin: 40px auto 0px;">
   <div style="text-align: center;">
-    <%= image_tag 'logo-black' %>
+    <%= image_tag 'logo-black.png' %>
   </div>
   <h2 style="text-align: center;">Prezado(a) <%= @user.name %>,</h2>
   <p>
@@ -9,7 +9,7 @@
   </p>
   <p style="font-weight: 700;">Segue abaixo as suas credenciais de acesso ao sistema:</p>
   <p style="font-weight: 700;">
-    URL de acesso: <%= link_to app_sign_in_url, app_sign_in_url, target: '_blank' %><br />
+    URL de acesso: <%= link_to 'Acesse aqui', "#{root_url}app/sign-up", target: '_blank' %><br />
     Usuário: <%= @user.email %><br />
     Senha: <%= ENV.fetch('DEFAULT_USERPASS') %><br />
   </p>
