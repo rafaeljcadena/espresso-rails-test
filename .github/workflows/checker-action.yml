@@ -13,6 +13,10 @@ jobs:
       RAILS_ENV: test
       DATABASE_URL: mysql2://root:@127.0.0.1/espresso-rails-test_test
       DEFAULT_USERPASS: espresso123456
+      AWS_REGION: 'us-east-2'
+      AWS_ACCESS_KEY_ID: 'AKIAWHBHT6AODA3SPCWU'
+      AWS_SECRET_ACCESS_KEY: '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'
+      AWS_BUCKET: 'cadena-espresso-app'
     services:
       mysql:
         image: mysql:8.4
