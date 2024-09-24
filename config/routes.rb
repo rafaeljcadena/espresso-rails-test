@@ -34,9 +34,4 @@ Rails.application.routes.draw do
   # Front routes
   get 'app', to: 'home#index'
   get 'app/*other', to: 'home#index'
-  # get 'app/cards', to: 'home#index'
-  # get 'app/categories', to: 'home#index'
-  # get 'app/users', to: 'home#index'
-  get 'app/sign-in', to: 'home#index'
-  # get 'app/sign-up', to: 'home#index'
 end
