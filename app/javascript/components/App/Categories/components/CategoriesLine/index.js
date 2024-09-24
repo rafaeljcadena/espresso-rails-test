@@ -1,10 +1,10 @@
 import { Box, Divider, Typography } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import CategoryIcon from '@mui/icons-material/Category';
 import axiosClient from '../../../configs/axiosClient';
 
 export default function CategoriesLine({ refreshData }) {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState();
 
   useEffect(() => {
     axiosClient.get('/api/v1/categories.json')
@@ -29,15 +29,15 @@ export default function CategoriesLine({ refreshData }) {
     <Box sx={{ marginTop: '30px' }}>
       {categories.map((category) => {
         return (
-          <>
-            <Box key={category.id} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Fragment key={category.id}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Box sx={{ background: '#BDBDBD', padding: 1, borderRadius: '50%', width: 40, height: 40, marginRight: '10px' }}>
                 <CategoryIcon sx={{ fill: 'white' }} />
               </Box>
               <Typography>{category.name}</Typography>
             </Box>
             <Divider sx={{ margin: '10px 0px'}} />
-          </>
+          </Fragment>
         );
       })}
     </Box>

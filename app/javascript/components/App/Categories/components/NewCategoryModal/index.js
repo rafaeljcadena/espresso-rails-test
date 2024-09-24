@@ -39,11 +39,13 @@ export default function NewCategoryModal({ open, toggleCategoryModalOpen, toggle
 
     axiosClient.post(`/api/v1/categories.json`, { category: { name: value }})
       .then(res => {
-        toggleCategoryModalOpen();
         toggleRefreshData();
+        toggleCategoryModalOpen();
       })
       .catch(err => {
-        if (!err.response) throw err;
+        const { data: dataError } = err.response;
+
+        setInputError(dataError.name);
       });
   }
 
@@ -74,11 +76,12 @@ export default function NewCategoryModal({ open, toggleCategoryModalOpen, toggle
           <TextField
             inputRef={inputRef}
             id="outlined-basic"
-            error={inputError}
+            error={!!inputError}
             helperText={inputError}
             label="Nome"
             variant="outlined"
             fullWidth
+            inputProps={{ "data-testid": "input-new-category" }}
           />
         </DialogContent>
         <DialogActions style={{ justifyContent: 'start' }}>
