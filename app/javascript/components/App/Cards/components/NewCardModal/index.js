@@ -33,26 +33,25 @@ export default function NewCardModal({ open, toggleCardModalOpen, toggleRefreshD
   
   const handleClick = () => {
     const cardNumber = inputCardNumberRef.current.value;
-    
+
     if (!cardNumber) {
-      setInputCardNumberError('Insira um nome válido');
+      setInputCardNumberError('Insira um número de cartão válido');
       return;
     }
 
     const userMail = inputUserRef.current.value;
 
     if (!userMail) {
-      setInputUserError('Insira um nome válido');
+      setInputUserError('Insira um e-mail válido');
       return;
     }
-
 
     setInputCardNumberError();
     setInputUserError();
     axiosClient.post(`/api/v1/cards.json`, { card: { last4: cardNumber, email: userMail }})
       .then(res => {
-        toggleCardModalOpen();
         toggleRefreshData();
+        toggleCardModalOpen();
       })
       .catch(err => {
         const { data: dataError } = err.response;
@@ -68,6 +67,7 @@ export default function NewCardModal({ open, toggleCardModalOpen, toggleRefreshD
         onClose={toggleCardModalOpen}
         aria-labelledby="customized-dialog-title"
         open={open}
+        data-testid="new-card-modal"
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Cadastrar cartão
@@ -89,22 +89,24 @@ export default function NewCardModal({ open, toggleCardModalOpen, toggleRefreshD
           <TextField
             inputRef={inputCardNumberRef}
             id="outlined-basic"
-            error={inputCardNumberError}
+            error={!!inputCardNumberError}
             helperText={inputCardNumberError}
             label="Número"
             variant="outlined"
             fullWidth
             type="number"
             sx={{ marginBottom: '20px' }}
+            inputProps={{ 'data-testid': 'input-card-number' }}
           />
           <TextField
             inputRef={inputUserRef}
             id="outlined-basic"
-            error={inputUserError}
+            error={!!inputUserError}
             helperText={inputUserError}
             label="Funcionário"
             variant="outlined"
             fullWidth
+            inputProps={{ 'data-testid': 'input-employee' }}
           />
         </DialogContent>
         <DialogActions style={{ justifyContent: 'start' }}>
@@ -112,6 +114,7 @@ export default function NewCardModal({ open, toggleCardModalOpen, toggleRefreshD
             autoFocus 
             onClick={handleClick} 
             variant="contained"
+            data-testid="create-card"
           >
             Cadastrar
           </Button>

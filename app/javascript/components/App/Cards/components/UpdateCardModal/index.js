@@ -41,13 +41,13 @@ export default function UpdateCardModal({ open, cardUpdateObj, toggleCardUpdateM
     setInputUserError();
     axiosClient.patch(`/api/v1/cards/${cardId}.json`, { card: { email: userMail }})
       .then(res => {
-        toggleCardUpdateModalOpen();
         toggleRefreshData();
+        toggleCardUpdateModalOpen();
       })
       .catch((err) => {
         const { data: dataError } = err.response;
 
-        if (dataError.user) setInputUserError('funcionário não encontrado')
+        setInputUserError(dataError.user)
       })
   }
 
@@ -78,12 +78,13 @@ export default function UpdateCardModal({ open, cardUpdateObj, toggleCardUpdateM
           <TextField
             inputRef={inputUserRef}
             id="outlined-basic"
-            error={inputUserError}
+            error={!!inputUserError}
             helperText={inputUserError}
             label="E-mail"
             variant="outlined"
             fullWidth
             sx={{ marginBottom: '20px' }}
+            inputProps={{ "data-testid": "input-employee" }}
           />
         </DialogContent>
         <DialogActions style={{ justifyContent: 'start' }}>

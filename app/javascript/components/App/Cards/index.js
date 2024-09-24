@@ -20,7 +20,7 @@ export default function Cards() {
     setCardUpdateModalOpen(prev => !prev);
   }
 
-  const prepateUpdateCardModal = (cardId) => {
+  const prepareUpdateCardModal = (cardId) => {
     setCardUpdateObj({ cardId });
     toggleCardUpdateModalOpen();
   }
@@ -33,12 +33,18 @@ export default function Cards() {
     <>
       <Container sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography sx={{ marginBottom: 2 }} variant="h5">Cartões</Typography>
-        <Button variant="contained" onClick={toggleCardModalOpen}>Cadastrar cartão +</Button>
+        <Button
+          variant="contained"
+          onClick={toggleCardModalOpen}
+          data-testid="add-card"
+        >
+          Cadastrar cartão +
+        </Button>
       </Container>
       <Container>
         <CardsLine
           refreshData={refreshData}
-          prepateUpdateCardModal={prepateUpdateCardModal}
+          prepareUpdateCardModal={prepareUpdateCardModal}
         />
       </Container>
       <NewCardModal

@@ -1,10 +1,10 @@
 import { Box, Divider, Typography, Button } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment }  from 'react';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import EditIcon from '@mui/icons-material/Edit';
 import axiosClient from '../../../configs/axiosClient';
 
-export default function CardsLine({ refreshData, prepateUpdateCardModal }) {
+export default function CardsLine({ refreshData, prepareUpdateCardModal }) {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
@@ -30,10 +30,10 @@ export default function CardsLine({ refreshData, prepateUpdateCardModal }) {
 
   return (
     <Box sx={{ marginTop: '30px' }}>
-      {cards.map((card) => {
+      {cards.map((card, index) => {
         return (
-          <>
-            <Box key={card.id} sx={{ display: 'flex', alignItems: 'center' }}>
+          <Fragment key={card.id}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Box sx={{ background: '#BDBDBD', padding: 1, borderRadius: '50%', width: 40, height: 40, marginRight: '10px' }}>
                 <CreditCardIcon sx={{ fill: 'white' }} />
               </Box>
@@ -46,13 +46,14 @@ export default function CardsLine({ refreshData, prepateUpdateCardModal }) {
                 variant="outlined"
                 startIcon={<EditIcon />}
                 sx={{ marginLeft: 'auto' }}
-                onClick={() => prepateUpdateCardModal(card.id)}
+                onClick={() => prepareUpdateCardModal(card.id)}
+                data-testid={`update-card-${index}`}
               >
                 Editar
               </Button>
             </Box>
             <Divider sx={{ margin: '10px 0px'}} />
-          </>
+          </Fragment>
         );
       })}
     </Box>
