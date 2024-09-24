@@ -89,7 +89,10 @@ export default function AdminLayout(props) {
               <Typography sx={{ fontSize: '1rem'}}>{user.name}</Typography>
               <Typography sx={{ fontSize: '.8rem'}}>{user.email}</Typography>
             </Box>
-            <IconButton onClick={logout}>
+            <IconButton 
+              data-testid="logout-button"
+              onClick={logout}
+            >
               <LogoutIcon sx={{ fill: 'white' }} />
             </IconButton>
           </Stack>
@@ -110,9 +113,15 @@ export default function AdminLayout(props) {
         <Toolbar />
         <Divider />
         <List>
-          {listMenuItem.map((item) => (
-            <Link to={item.path} style={{ color: '#000000', textDecoration: 'none' }}>
-              <ListItem key={item.label} disablePadding>
+          {listMenuItem.map((item, ) => (
+            <Link 
+              key={item.label} 
+              to={item.path}
+              style={{ 
+                color: '#000000', 
+                textDecoration: 'none' 
+              }}>
+              <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
                     {item.icon}

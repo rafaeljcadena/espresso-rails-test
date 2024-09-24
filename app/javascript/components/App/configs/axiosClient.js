@@ -29,14 +29,12 @@ axiosClient.interceptors.response.use(function (response) {
 
   return response;
 }, function (error) {
-  if (error.response) {
+  const { status, config } = error.response;
 
-    const { status, config } = error.response;
-    if (status === 401 && config.url !== '/auth/sign_in') {
-      clearAuth();
-      window.location = '/app/sign-in';
-    }
-  }   
+  if (status === 401 && config.url !== '/auth/sign_in') {
+    clearAuth();
+    window.location = '/app/sign-in';
+  }
 
   return Promise.reject(error);
 });

@@ -7,10 +7,8 @@ export default function ToastComponent({ open, message, handleCloseToast }) {
     <Snackbar
       open={open}
       autoHideDuration={5000}
-      onClose={handleCloseToast}
     >
       <Alert
-        onClose={handleCloseToast}
         severity="success"
         variant="filled"
         sx={{ width: '100%' }}
