@@ -1,0 +1,26 @@
+pt-BR:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: 'não pode ficar em branco'
+              taken: 'e-mail já cadastrado'
+            password:
+              blank: 'não pode ficar em branco'
+            company:
+              invalid: 'não é válido'
+        company:
+          attributes:
+            name:
+              blank: 'não pode ficar em branco'
+            cnpj:
+              blank: 'não pode ficar em branco'
+        card:
+          attributes:
+            user:
+              required: 'funcionário inválido'
+  mailers:
+    welcome:
+      subject: 'Bem-vindo ao Espresso! Aqui estão suas credenciais de acesso'
