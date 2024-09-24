@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CreateStatements < ActiveRecord::Migration[5.2]
+  # rubocop:disable Metrics/MethodLength
   def change
     create_table :statements do |t|
       t.datetime :performed_at
@@ -15,4 +16,5 @@ class CreateStatements < ActiveRecord::Migration[5.2]
       t.timestamps
     end
   end
+  # rubocop:enable Metrics/MethodLength
 end
