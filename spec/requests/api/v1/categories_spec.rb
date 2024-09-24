@@ -19,10 +19,15 @@ RSpec.describe '/categories' do
   let(:company_a) { create(:company_a) }
   let(:category_a) { create(:category_a, company: company_a) }
   let(:admin_a) { create(:admin_a, company: company_a) }
-  let(:admin_auth_token) { admin_a.create_new_auth_token }
   let(:employee_a_first) { create(:employee_a_first, company: company_a) }
-  let(:employee_a_second) { create(:employee_a_second, company: company_a) }
-  let(:employee_auth_token) { employee_a_first.create_new_auth_token }
+
+  def admin_auth_token
+    admin_a.create_new_auth_token
+  end
+
+  def employee_auth_token
+    employee_a_first.create_new_auth_token
+  end
 
   describe 'GET /index' do
     it 'not allowed for employees' do

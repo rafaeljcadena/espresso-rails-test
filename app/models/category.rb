@@ -5,8 +5,4 @@ class Category < ApplicationRecord
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :company_id, allow_blank: true }
-
-  def to_s
-    name
-  end
 end
