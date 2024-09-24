@@ -27,15 +27,8 @@ FactoryBot.define do
 
     factory :employee_a_second do
       name { 'Funcionario 2 Empresa A' }
-      email { 'employee_a_2@teste.com' }
+      email { 'employee_a_second@teste.com' }
       role { 'employee' }
-
-      before(:create) do |employee|
-        next if employee.company.present?
-
-        admin = create(:admin_a)
-        employee.company = admin.company
-      end
     end
 
     factory :admin_b do
@@ -45,7 +38,7 @@ FactoryBot.define do
       company factory: :company_b
     end
 
-    factory :employee_b do
+    factory :employee_b_first do
       name { 'Funcionario 1 Empresa B' }
       email { 'employee_b@teste.com' }
       role { 'employee' }
