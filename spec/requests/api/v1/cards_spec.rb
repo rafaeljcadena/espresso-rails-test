@@ -18,15 +18,13 @@ RSpec.describe '/cards' do
   let(:valid_attributes) { attributes_for(:card_a) }
   let(:company_a) { create(:company_a) }
   let(:admin_a) { create(:admin_a, company: company_a) }
-  let(:admin_auth_token) { admin_a.create_new_auth_token }
   let(:employee_a_first) { create(:employee_a_first, company: company_a) }
   let(:employee_a_second) { create(:employee_a_second, company: company_a) }
-  let(:employee_auth_token) { employee_a_first.create_new_auth_token }
 
   describe 'GET /index' do
     it 'not allowed for employees' do
       get api_v1_cards_path
-      expect(response).to have_http_status(:unauthorized), headers: employee_auth_token
+      expect(response).to have_http_status(:unauthorized), headers: employee_a_first.create_new_auth_token
     end
 
     it 'renders a unauthorized response for non-authenticated user' do
@@ -39,7 +37,7 @@ RSpec.describe '/cards' do
     it 'renders a successful response for authenticated user' do
       create(:card_a, user: admin_a)
 
-      get api_v1_cards_path, headers: admin_auth_token
+      get api_v1_cards_path, headers: admin_a.create_new_auth_token
       expect(response).to have_http_status(:success)
     end
   end
@@ -48,28 +46,29 @@ RSpec.describe '/cards' do
     it 'not allowed for employees' do
       email = employee_a_first.email
 
-      post api_v1_cards_path, params: { card: valid_attributes.merge(email: email) }, headers: employee_auth_token
+      post api_v1_cards_path, params: { card: valid_attributes.merge(email: email) },
+                              headers: employee_a_first.create_new_auth_token
       expect(response).to have_http_status(:unauthorized)
     end
 
     context 'with valid parameters' do
-      it 'creates a new Card' do
+      it 'allow admins create a new Card' do
         expect do
-          employee_with_company_a = create(:employee_a_first, company: admin_a.company)
-          email = employee_with_company_a.email
+          email = employee_a_first.email
 
-          post api_v1_cards_path, params: { card: valid_attributes.merge(email: email) }, headers: admin_auth_token
+          post api_v1_cards_path, params: { card: valid_attributes.merge(email: email) },
+                                  headers: admin_a.create_new_auth_token
         end.to change(Card, :count)
       end
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new Card' do
+      it 'not allow admins create a new Card' do
         expect do
-          create(:employee_a_first, company: admin_a.company)
-          email = nil
+          # create(:employee_a_first, company: admin_a.company)
 
-          post api_v1_cards_path, params: { card: valid_attributes.merge(email: email) }, headers: admin_auth_token
+          post api_v1_cards_path, params: { card: valid_attributes.merge(email: nil) },
+                                  headers: admin_a.create_new_auth_token
         end.not_to change(Card, :count)
       end
     end
@@ -79,23 +78,19 @@ RSpec.describe '/cards' do
     it 'not allowed for employees' do
       card_a = create(:card_a)
       employee = card_a.user
-      email = card_a.user.email
 
-      patch api_v1_card_path(card_a),
-            params: { card: valid_attributes.merge(email: email) },
-            headers: employee.create_new_auth_token
+      patch api_v1_card_path(card_a), params: { card: valid_attributes.merge(email: employee.email) },
+                                      headers: employee.create_new_auth_token
       expect(response).to have_http_status(:unauthorized)
     end
 
     context 'with valid parameters' do
       it 'updates the requested card' do
         card = create(:card_a, user: employee_a_first)
-        other_email = employee_a_second.email
 
-        patch api_v1_card_url(card), params: { card: { email: other_email } }, headers: admin_auth_token
-        card.reload
-
-        expect(card.user_id).to eq(employee_a_second.id)
+        patch api_v1_card_url(card), params: { card: { email: employee_a_second.email } },
+                                     headers: admin_a.create_new_auth_token
+        expect(card.reload.user_id).to eq(employee_a_second.id)
       end
     end
 
@@ -104,7 +99,7 @@ RSpec.describe '/cards' do
         card = create(:card_a, user: employee_a_first)
         employee_a_second.email
 
-        patch api_v1_card_url(card), params: { card: { email: nil } }, headers: admin_auth_token
+        patch api_v1_card_url(card), params: { card: { email: nil } }, headers: admin_a.create_new_auth_token
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -114,14 +109,14 @@ RSpec.describe '/cards' do
     it 'not allowed for employees' do
       card = create(:card_a, user: employee_a_first)
 
-      delete api_v1_card_url(card), headers: employee_auth_token
+      delete api_v1_card_url(card), headers: employee_a_first.create_new_auth_token
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'destroys the requested card' do
       card = create(:card_a, user: employee_a_first)
       expect do
-        delete api_v1_card_url(card), headers: admin_auth_token
+        delete api_v1_card_url(card), headers: admin_a.create_new_auth_token
       end.to change(Card, :count)
     end
   end

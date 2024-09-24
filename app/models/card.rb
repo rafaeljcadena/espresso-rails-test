@@ -13,8 +13,4 @@ class Card < ApplicationRecord
     is_valid = creator.company_id == user.company_id
     errors.add(:check_user_company, 'funcionário não pertence a empresa do administrador') unless is_valid
   end
-
-  def to_s
-    last4
-  end
 end

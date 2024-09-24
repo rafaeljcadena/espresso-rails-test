@@ -9,7 +9,7 @@ FactoryBot.define do
     end
 
     factory :card_b do
-      user factory: :employee_b
+      user factory: :employee_b_first
     end
   end
 end
