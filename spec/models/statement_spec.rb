@@ -27,13 +27,13 @@ RSpec.describe Statement do
 
   describe 'custom validation' do
     it 'check_category_company: check if category company is the same of statement company' do
-      statement_a = create(:statement_a)
+      statement = create(:statement, card: create(:card_a))
       category_b = create(:category_b)
 
-      statement_a.category = category_b
-      statement_a.valid?
+      statement.category = category_b
+      statement.valid?
 
-      expect(statement_a.errors).to have_key(:check_category_company)
+      expect(statement.errors).to have_key(:check_category_company)
     end
   end
 end

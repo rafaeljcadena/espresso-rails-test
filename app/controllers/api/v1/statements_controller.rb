@@ -12,7 +12,8 @@ module Api
       end
 
       def archive
-        @statement.toggle!(:archived)
+        @statement.toggle(:archived)
+        @statement.save!
 
         render json: @statement, status: :ok
       end

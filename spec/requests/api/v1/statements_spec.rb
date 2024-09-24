@@ -15,57 +15,89 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/statements' do
-  let(:valid_attributes) { attributes_for(:statement_a) }
   let(:company_a) { create(:company_a) }
-  let(:category_a) { create(:category_a, company: company_a) }
   let(:admin_a) { create(:admin_a, company: company_a) }
   let(:employee_a_first) { create(:employee_a_first, company: company_a) }
   let(:employee_a_second) { create(:employee_a_second, company: company_a) }
   let(:card_a) { create(:card_a, user: employee_a_first) }
-  let(:statement_a) { create(:statement_a, card: card_a) }
-  let(:admin_auth_token) { admin_a.create_new_auth_token }
-  let(:employee_auth_token) { employee_a_first.create_new_auth_token }
+
+  def admin_auth_token
+    admin_a.create_new_auth_token
+  end
+
+  def employee_auth_token
+    employee_a_first.create_new_auth_token
+  end
 
   describe 'GET /index' do
-    it 'not allowed for employees' do
-      get api_v1_statements_path
-      expect(response).to have_http_status(:unauthorized), headers: employee_auth_token
-    end
-
     it 'renders a unauthorized response for non-authenticated user' do
-      create(:card_a, user: admin_a)
-
       get api_v1_statements_path
       expect(response).to have_http_status(:unauthorized)
     end
 
-    it 'renders a successful response for authenticated user' do
-      create(:card_a, user: admin_a)
-
+    it 'renders a successful response for authenticated admins' do
       get api_v1_statements_path, headers: admin_auth_token
       expect(response).to have_http_status(:success)
+    end
+
+    it 'renders a successful response for authenticated employees' do
+      get api_v1_statements_path, headers: employee_auth_token
+      expect(response).to have_http_status(:success)
+    end
+
+    it "list statements from admin's company", :data do
+      statement = create(:statement, card: card_a)
+
+      get api_v1_statements_path, headers: admin_auth_token
+      response_data = response.parsed_body['statements']
+
+      expect(response_data[0]['id']).to eq(statement.id)
+    end
+
+    it 'hide statements from others company', :data do
+      card_b = create(:card_b)
+      create(:statement, card: card_b)
+
+      get api_v1_statements_path, headers: admin_auth_token
+      response_data = response.parsed_body['statements']
+
+      expect(response_data).to be_empty
     end
   end
 
   describe 'PATCH /archive' do
     it 'not allowed for employees' do
-      patch archive_api_v1_statement_path(statement_a),
+      statement = create(:statement, card: card_a)
+
+      patch archive_api_v1_statement_path(statement),
             headers: employee_auth_token
       expect(response).to have_http_status(:unauthorized)
     end
 
     it 'does archive statements' do
-      patch archive_api_v1_statement_path(statement_a),
+      statement = create(:statement, card: card_a)
+
+      patch archive_api_v1_statement_path(statement),
             headers: admin_auth_token
 
-      statement_a.reload
-      expect(statement_a.archived).to be_truthy
+      statement.reload
+      expect(statement.archived).to be_truthy
     end
   end
 
   describe 'PATCH /update' do
+    def valid_file
+      fixture_file_upload('spec/fixtures/files/image.png')
+    end
+
+    def invalid_file
+      fixture_file_upload('spec/fixtures/files/invalid-file.xls')
+    end
+
     it 'not allow admins access' do
-      patch api_v1_statement_path(statement_a),
+      statement = create(:statement, card: card_a)
+
+      patch api_v1_statement_path(statement),
             params: { statement: {} },
             headers: admin_auth_token
       expect(response).to have_http_status(:unauthorized)
@@ -73,19 +105,21 @@ RSpec.describe '/statements' do
 
     context 'with valid parameters' do
       it 'update statement by employees' do
-        file = fixture_file_upload('spec/fixtures/files/image.png')
-        patch api_v1_statement_path(statement_a),
-              params: { statement: { category_id: category_a.id, file: file } },
-              headers: employee_auth_token
+        category = create(:category_a, company: company_a)
+        statement = create(:statement, card: card_a)
+
+        patch api_v1_statement_path(statement), params: { statement: { category_id: category.id, file: valid_file } },
+                                                headers: employee_auth_token
         expect(response).to have_http_status(:ok)
       end
     end
 
     context 'with invalid parameters' do
       it 'does not update statements by employees' do
-        invalid_file = fixture_file_upload('spec/fixtures/files/invalid-file.xls')
-        patch api_v1_statement_path(statement_a), params: { statement: { file: invalid_file, category_id: nil } },
-                                                  headers: employee_auth_token
+        statement = create(:statement, card: card_a)
+
+        patch api_v1_statement_path(statement), params: { statement: { category_id: nil, file: invalid_file } },
+                                                headers: employee_auth_token
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
