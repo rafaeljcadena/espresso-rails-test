@@ -53,5 +53,7 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV.fetch('CLEARDB_DATABASE_URL') %>
+  database: espresso-rails-test_production
+  username: espresso-rails-test
+  password: <%= ENV['ESPRESSO-RAILS-TEST_DATABASE_PASSWORD'] %>
 
