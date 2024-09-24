@@ -56,7 +56,6 @@
       "^.+\\.[t|j]sx?$": "babel-jest"
     },
     "roots": [
-      "spec/javascript",
       "app/javascript/components"
     ],
     "collectCoverageFrom": [
