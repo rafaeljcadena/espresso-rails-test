@@ -57,11 +57,6 @@ export default function StatementsTable({ filter, emptyDataLabel, prepareUpdateM
     fetchStatements(newPage + 1);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   const fetchStatements = (queryPage = 1) => {
     const queryParams = []
     queryParams.push(`page=${queryPage}`);
@@ -155,10 +150,11 @@ export default function StatementsTable({ filter, emptyDataLabel, prepareUpdateM
                               return (
                                 <TableCell key={column.id} align={column.align}>
                                   <div style={{ display: 'flex' }}>
-                                    <IconButton>
-                                      <EditIcon
-                                        onClick={() => prepareUpdateModal(row.id, row.category)}
-                                      />
+                                    <IconButton
+                                      onClick={() => prepareUpdateModal(row.id, row.category)}
+                                      data-testid={`update-button-${row.card_last4}`}
+                                    >
+                                      <EditIcon />
                                     </IconButton>
                                     {row.file && (
                                       <Link 
@@ -196,7 +192,6 @@ export default function StatementsTable({ filter, emptyDataLabel, prepareUpdateM
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Paper>
         </>

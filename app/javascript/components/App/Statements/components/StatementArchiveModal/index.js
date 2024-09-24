@@ -8,7 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
+import axiosClient from '../../../configs/axiosClient';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -24,10 +24,10 @@ export default function StatementArchiveModal({ open, toggleArchiveModalOpen, ar
   const handleArchive = () => {
     const { statementId } = archiveConfigObj;
 
-    axios.patch(`/api/v1/statements/${statementId}/archive.json`)
+    axiosClient.patch(`/api/v1/statements/${statementId}/archive.json`)
       .then(res => {
-        toggleArchiveModalOpen();
         toggleRefreshData();
+        toggleArchiveModalOpen();
       });
   }
 

@@ -28,7 +28,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function StatementUpdateModal({ open, statement, categoryList, toggleUpdateModal, toggleRefreshData }) {
-  
   const inputFileRef = useRef();
   const [inputFileError, setInputFileError] = useState();
 
@@ -36,11 +35,7 @@ export default function StatementUpdateModal({ open, statement, categoryList, to
   const [inputCategoryError, setInputCategoryError] = useState();
 
   const handleChange = (_event, option) => {
-    if (option) {
-      selectCategoryRef.current = option.id;
-    } else {
-      selectCategoryRef.current = '';
-    }
+    selectCategoryRef.current = option?.id;
   }
   
   const handleClick = () => {
@@ -74,8 +69,8 @@ export default function StatementUpdateModal({ open, statement, categoryList, to
       },
     })
     .then(res => {
-      toggleUpdateModal();
       toggleRefreshData();
+      toggleUpdateModal();
     })
     .catch(err => {
       if (!err.response) return; 
@@ -91,7 +86,6 @@ export default function StatementUpdateModal({ open, statement, categoryList, to
   const maxSize = 11447901;
   const validateFile = (file) => {
     if (!file) throw new Error('arquivo não encontrado');
-    console.log({ file })
 
     const fileType = file.type;
     if (!allowedType.includes(fileType)) throw new Error('tipo de arquivo não permitido');
@@ -130,7 +124,7 @@ export default function StatementUpdateModal({ open, statement, categoryList, to
           <TextField
             id="outlined-basic"
             inputRef={inputFileRef}
-            error={inputFileError}
+            error={!!inputFileError}
             helperText={inputFileError}
             label="Carregar imagem"
             variant="outlined"
@@ -143,6 +137,7 @@ export default function StatementUpdateModal({ open, statement, categoryList, to
             InputLabelProps={{
               shrink: true
             }}
+            inputProps={{ "data-testid": "input-file" }}
           />
           <Typography gutterBottom>Escolha a categoria da despesa</Typography>
           <Autocomplete

@@ -59,11 +59,6 @@ export default function StatementsTable({ archived, emptyDataLabel, prepareArchi
     fetchStatements(newPage + 1);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
   const fetchStatements = (queryPage = 1) => {
     const queryParams = []
     queryParams.push(`page=${queryPage}`);
@@ -143,7 +138,7 @@ export default function StatementsTable({ archived, emptyDataLabel, prepareArchi
                   <TableRow>
                     {columns.map((column) => (
                       <TableCell
-                        key={column.id}
+                        key={column.label}
                         align={column.align}
                         style={{ minWidth: column.minWidth }}
                       >
@@ -157,7 +152,7 @@ export default function StatementsTable({ archived, emptyDataLabel, prepareArchi
                     .map((row) => {
                       return (
                         <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                          {fetchColumns().map((column) => {
+                          {fetchColumns().map((column, index) => {
                             const value = row[column.id];
                             const type = column.id;
 
@@ -165,10 +160,11 @@ export default function StatementsTable({ archived, emptyDataLabel, prepareArchi
                               return (
                                 <TableCell key={column.id} align={column.align}>
                                   <div style={{ display: 'flex' }}>
-                                    <IconButton>
-                                      <ArchiveOutlinedIcon
-                                        onClick={() => prepareArchiveModal(row.id)}
-                                      />
+                                    <IconButton
+                                      onClick={() => prepareArchiveModal(row.id)}
+                                      data-testid={`archive-button-${row.card_last4}`}
+                                    >
+                                      <ArchiveOutlinedIcon />
                                     </IconButton>
                                     <IconButton>
                                       <RemoveRedEyeIcon />
@@ -197,7 +193,15 @@ export default function StatementsTable({ archived, emptyDataLabel, prepareArchi
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+              slotProps={{
+                nextButton: {
+                  className: 'TESTE',
+                  "data-testid": "next-button",
+                },
+                previousButton: {
+                  "data-testid": "previous-button",
+                },
+              }}
             />
           </Paper>
         </>
@@ -205,3 +209,4 @@ export default function StatementsTable({ archived, emptyDataLabel, prepareArchi
     </>
   );
 }
+// 
